@@ -9,15 +9,17 @@
     {% endblock %}
 </head>
 <body>
-
-{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+{% block body %}
+    {% if is_granted("IS_AUTHENTICATED_FULLY") %}
     <h3> Tu es connecté {% if is_granted('ROLE_ADMIN') %} en admin {% endif %}</h3>
     <a href="{{ path("fos_user_security_logout") }}"> <button class="btn btn-primary">Déconnexion</button></a>
-{% else %}
+    {% else %}
     <a href="{{ path("fos_user_security_login") }}"> <button class="btn btn-primary">Connexion</button></a>
-{% endif %}
-{% block body %}
-
+    {% endif %}
+    <a href="{{ path('menu_index') }}"><button class="btn btn-secondary">Menu</button></a>
+    <a href="{{ path('product_index') }}"><button class="btn btn-secondary">Produits</button></a>
+    <a href="{{ path('menu_index') }}"><button class="btn btn-secondary">Images</button></a>
+    <a href="{{ path('allergen_index') }}"><button class="btn btn-secondary">Allergènes</button></a>
 {% endblock %}
 <script src ="{{ (asset('asset/js/jquery.js')) }}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
