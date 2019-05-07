@@ -1,3 +1,9 @@
 controllers:
+    host: 'symfony.fr'
     resource: ../../src/Controller/
+    type: annotation
+
+api_controller:
+    host: 'api.symfony.fr'
+    resource: ../../src/ApiController/
     type: annotation
