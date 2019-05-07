@@ -36,11 +36,11 @@ class Product
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Allergen")
      */
-    private $allergens;
+    private $allergen;
 
     public function __construct()
     {
-        $this->allergens = new ArrayCollection();
+        $this->allergen = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,15 +92,15 @@ class Product
     /**
      * @return Collection|Allergen[]
      */
-    public function getAllergens(): Collection
+    public function getAllergen(): Collection
     {
-        return $this->allergens;
+        return $this->allergen;
     }
 
     public function addAllergen(Allergen $allergen): self
     {
-        if (!$this->allergens->contains($allergen)) {
-            $this->allergens[] = $allergen;
+        if (!$this->allergen->contains($allergen)) {
+            $this->allergen[] = $allergen;
         }
 
         return $this;
@@ -108,8 +108,8 @@ class Product
 
     public function removeAllergen(Allergen $allergen): self
     {
-        if ($this->allergens->contains($allergen)) {
-            $this->allergens->removeElement($allergen);
+        if ($this->allergen->contains($allergen)) {
+            $this->allergen->removeElement($allergen);
         }
 
         return $this;

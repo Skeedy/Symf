@@ -22,7 +22,7 @@
                 <td>{{ product.id }}</td>
                 <td>{{ product.name }}</td>
                 <td>{{ product.description }}</td>
-                <td>{%  if product.allergens %} {%  for allergen in product.allergens %}<li>{{ allergen.name }}</li>{% endfor %}{%  endif %}</td>
+                <td>{%  if product.allergen %} {%  for allergen in product.allergen %}<li>{{ allergen.name }}</li>{% endfor %}{%  endif %}</td>
                 <td>{% if product.image %} <img src="{{ asset(product.image.imgpath) }}" width="200px" /> {% endif %}</td>
                 <td>
                     <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
