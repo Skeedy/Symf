@@ -38,6 +38,11 @@ class Product
      */
     private $allergen;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
+     */
+    private $category;
+
     public function __construct()
     {
         $this->allergen = new ArrayCollection();
@@ -111,6 +116,18 @@ class Product
         if ($this->allergen->contains($allergen)) {
             $this->allergen->removeElement($allergen);
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

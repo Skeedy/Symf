@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Product;
+use App\Entity\Category;
 use App\Entity\Allergen;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -17,6 +18,11 @@ class ProductType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'multiple' => false,
+                'expanded' => true,
+            ])
             ->add('image', ImageType::class)
             ->add('allergen', EntityType::class, [
                 'class' => Allergen::class,
@@ -44,6 +50,7 @@ class ApiProductType extends AbstractType
     {
         $builder
             ->add('name')
+
             ->add('description')
             ->add('image', ImageType::class)
             ->add('allergen', EntityType::class, [

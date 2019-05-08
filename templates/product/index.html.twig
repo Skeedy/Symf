@@ -9,6 +9,7 @@
         <thead>
         <tr>
             <th>Id</th>
+            <th>Category</th>
             <th>Name</th>
             <th>Description</th>
             <th>Allergènes</th>
@@ -20,6 +21,7 @@
         {% for product in products %}
             <tr>
                 <td>{{ product.id }}</td>
+                <td>{{ product.category }}</td>
                 <td>{{ product.name }}</td>
                 <td>{{ product.description }}</td>
                 <td>{%  if product.allergen %} {%  for allergen in product.allergen %}<li>{{ allergen.name }}</li>{% endfor %}{%  endif %}</td>
