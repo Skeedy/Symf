@@ -36,4 +36,35 @@ class ProductType extends AbstractType
             'data_class' => Product::class,
         ]);
     }
+
+}
+class ApiProductType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('name')
+            ->add('description')
+            ->add('image', ImageType::class)
+            ->add('allergen', EntityType::class, [
+                'class' => Allergen::class,
+                'multiple' => true,
+                'expanded' => true,
+                'choice_label' => function($allergen){
+                    $test = $allergen->getImage();
+                    return $test;
+                }
+            ])
+        ;
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => ApiProductType::class
+        ));
+    }
 }
