@@ -94,6 +94,30 @@ class AllergenController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $image = $allergen->getImage();
+            $file = $form->get('image')->get('file')->getData();
+
+            if ($file){
+                $fileName = $this->generateUniqueFileName().'.'. $file->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $file->move(
+                        $this->getParameter('img_abs_path'), $fileName
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                $this->removeFile($image->getPath());
+                $image->setPath($this->getParameter('img_abs_path').'/'.$fileName) ;
+                $image->setImgpath($this->getParameter('img_path').'/'.$fileName);
+                $entityManager->persist($image);
+            }
+
+            if (empty($image->getId()) && !$file ){
+                $allergen->setImage(null);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('allergen_index', [
@@ -114,7 +138,9 @@ class AllergenController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$allergen->getId(), $request->request->get('_token'))) {
             $image = $allergen->getImage();
-            $this->removeFile($image->getPath());
+            if($image) {
+                $this->removeFile($image->getPath());
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($allergen);
             $entityManager->flush();
