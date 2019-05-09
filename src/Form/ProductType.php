@@ -22,6 +22,7 @@ class ProductType extends AbstractType
                 'class' => Category::class,
                 'multiple' => false,
                 'expanded' => true,
+
             ])
             ->add('image', ImageType::class)
             ->add('allergen', EntityType::class, [

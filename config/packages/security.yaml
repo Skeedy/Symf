@@ -15,7 +15,29 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        login:
+            host: api\.symf\.fr
+            pattern: ^/login
+            stateless: true
+            anonymous: true
+            json_login:
+                check_path: /login_check
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        api:
+            host: api\.symf\.fr
+            pattern: ^/
+            stateless: true
+            anonymous: false
+            provider: fos_userbundle
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
         main:
+            host: symf\.fr
             pattern: ^/
             form_login:
                 provider: fos_userbundle
@@ -28,3 +50,5 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, role: ROLE_ADMIN }
+        - { path: ^/category, role: ROLE_USER, host: api\.symfony\.fr }
+#        - { path: ^/category, role: ROLE_USER, host: symfony\.fr }
