@@ -17,7 +17,13 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'multiple' => false,
+                'expanded' => true,
+            ])
             ->add('description')
+            ->add('composition')
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'multiple' => false,
@@ -29,10 +35,7 @@ class ProductType extends AbstractType
                 'class' => Allergen::class,
                 'multiple' => true,
                 'expanded' => true,
-                'choice_label' => function($allergen){
-                    $test = $allergen->getImage();
-                    return $test;
-                }
+
                 ])
         ;
     }

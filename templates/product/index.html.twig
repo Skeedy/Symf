@@ -12,6 +12,7 @@
             <th>Category</th>
             <th>Name</th>
             <th>Description</th>
+            <th>Composition</th>
             <th>Allergènes</th>
             <th>Images</th>
             <th>actions</th>
@@ -24,7 +25,8 @@
                 <td>{{ product.category }}</td>
                 <td>{{ product.name }}</td>
                 <td>{{ product.description }}</td>
-                <td>{%  if product.allergen %} {%  for allergen in product.allergen %}<li>{{ allergen.name }}</li>{% endfor %}{%  endif %}</td>
+                <td>{{ product.composition }}</td>
+                <td>{%  if product.allergen %} {%  for allergen in product.allergen %}<divphp><img src="{{ asset(allergen.image.imgpath) }}"></divphp>{% endfor %}{%  endif %}</td>
                 <td>{% if product.image %} <img src="{{ asset(product.image.imgpath) }}" width="200px" /> {% endif %}</td>
                 <td>
                     <a href="{{ path('product_show', {'id': product.id}) }}">show</a>

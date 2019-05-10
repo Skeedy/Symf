@@ -4,6 +4,7 @@ namespace App\ApiController;
 
 use App\Entity\Product;
 use App\Form\ApiProductType;
+use App\Repository\AllergenRepository;
 use App\Repository\ProductRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -50,13 +51,19 @@ class ProductController extends AbstractFOSRestController
      * @Rest\View()
      * @return View;
      */
-    public  function create(Request $request): View
+    public  function create(Request $request, AllergenRepository $allergenRepository): View
     {
+        $em = $this->getDoctrine()->getManager();
         $product = new Product();
         $product->setName($request->get('name'));
         $product->setDescription($request->get('description'));
-        $product->addAllergen($request->get('allergen'));
-        $em = $this->getDoctrine()->getManager();
+        $allergenId =$request->get('allergen');
+        foreach ($allergenId as $allergen){
+            $aller = $allergenRepository->find($allergen);
+            $product->addAllergen($aller);
+            $em->persist($aller);
+        }
+        $product->setCategory($request->get('category'));
         $em ->persist($product);
         $em->flush();
         return View::create($product, Response::HTTP_CREATED);

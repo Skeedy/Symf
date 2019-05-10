@@ -43,6 +43,11 @@ class Product
      */
     private $category;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $composition;
+
     public function __construct()
     {
         $this->allergen = new ArrayCollection();
@@ -128,6 +133,18 @@ class Product
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getComposition(): ?string
+    {
+        return $this->composition;
+    }
+
+    public function setComposition(string $composition): self
+    {
+        $this->composition = $composition;
 
         return $this;
     }
